@@ -13,7 +13,7 @@ const Categories = () => {
         justify-center items-center'
         style={{backgroundColor:category.bgColor}}
         onClick={()=>{
-navigate(`/prodcts/${category.path.toLowerCase()}`);
+navigate(`/products/${category.path.toLowerCase()}`);
 scrollTo(0,0)
         }}
         >
