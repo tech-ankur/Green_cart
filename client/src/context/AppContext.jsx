@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 export const AppContext=createContext();
 
 export const AppContextProvider=({children})=>{
-    const currency=import.meta.VITE_CURRENCY
+    const currency=import.meta.env.VITE_CURRENCY
     const navigate=useNavigate()
     const [user,setUser]=useState(true)
     const [isseller,setIsseller]=useState(false)
@@ -37,6 +37,25 @@ setCartItems(cartData);
 toast.success("Added to cart")
 }
 
+//get cart item count
+const getCartCount=()=>{
+    let totalCount=0;
+    for(const item in cartItems){
+        totalCount+=cartItems[item]
+    }
+    return totalCount;
+}
+//get cart total amount
+const getCartAmount=()=>{
+    let totalAmount=0;
+    for(const items in cartItems){
+        let iteminfo=products.find((product)=>product._id===items);
+        if(cartItems[items]>0){
+            totalAmount+=iteminfo.offerPrice*cartItems[items]
+        }
+    }
+    return Math.floor(totalAmount*100)/100;
+}
 //update cart item quantity
 const updateCartItem=(itemId,quantity)=>{
 let cartData=structuredClone(cartItems);
@@ -59,7 +78,7 @@ const removeFromCart=(itemId)=>{
 }
 
 const value={currency,navigate,user,setUser,setIsseller,isseller,showUserLogin,setShowUserLogin,
-    products,setproducts,addToCart,updateCartItem,removeFromCart,cartItems,searchQuery,setSearchQuery}
+    products,setproducts,addToCart,updateCartItem,removeFromCart,cartItems,searchQuery,setSearchQuery,getCartCount,getCartAmount}
 return <AppContext.Provider value={value}>
     {children}
 </AppContext.Provider>
