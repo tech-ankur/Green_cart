@@ -16,7 +16,7 @@ const app=express();
 const port=process.env.PORT||4000;
 
 //Allowed origins for CORS
-const allowedOrigins = ['http://localhost:5173']
+const allowedOrigins = ['http://localhost:5173','https://green-cart-eight-azure.vercel.app']
 
 app.post('/stripe',express.raw({type:'application/json'}),stripeWebhook)
 //moddleware configuration
