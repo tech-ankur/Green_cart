@@ -2,13 +2,25 @@ import React, { useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
 import { assets } from '../assets/assets'
 import { useAppContext } from '../context/AppContext'
-
+import toast from 'react-hot-toast'
 const Navbar = () => {
     const [open, setOpen] = React.useState(false)
-    const {getCartCount,getCartAmount,user,setUser,setShowUserLogin,navigate,searchQuery,setSearchQuery}=useAppContext();
+    const {axios,getCartCount,getCartAmount,user,setUser,setShowUserLogin,navigate,searchQuery,setSearchQuery}=useAppContext();
     const logout=async()=>{
-        setUser(null);
-        navigate('/')
+        try {
+            const {data}=await axios.get('/api/user/logout');
+            if(data.success){
+                toast.success(data.message);
+                setUser(null);
+                navigate('/')
+            }
+            else{
+                 toast.error(data.message);
+            }
+        } catch (error) {
+            toast.error(error.message);
+        }
+       
     }
     useEffect(()=>{
 if(searchQuery.length>0){
@@ -41,7 +53,7 @@ if(searchQuery.length>0){
                     Login
                 </button>)
                 :(
-<               div className='relative group'>
+< div className='relative group'>
                        <img src={assets.profile_icon} className='w-10' alt="" /> 
                        <ul className='hidden group-hover:block absolute top-10 right-0 bg-white shadow border border-gray-200 py-2.5 w-30 rounded-md text-sm z-40'>
                         <li onClick={()=>navigate("my-orders") } className='p-1.5 p1-3 hover:bg-primary/10 cursor-pointer'>My Orders</li>
@@ -76,7 +88,7 @@ if(searchQuery.length>0){
                     setShowUserLogin(true);
                   }} className="cursor-pointer px-6 py-2 mt-2 bg-indigo-500 hover:bg-primary-dull transition text-white rounded-full text-sm">
                     Login
-                </button>) :(<button onclick={logout} className="cursor-pointer px-6 py-2 mt-2 bg-indigo-500 hover:bg-primary-dull transition text-white rounded-full text-sm">
+                </button>) :(<button onClick={logout} className="cursor-pointer px-6 py-2 mt-2 bg-indigo-500 hover:bg-primary-dull transition text-white rounded-full text-sm">
                     Logout
                 </button>)}
                 
