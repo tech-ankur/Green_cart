@@ -1,4 +1,5 @@
-node_modules
 .env
-dist
-build
+client/.env
+Server/.env
+node_modules
+git rm --cached client/.env
