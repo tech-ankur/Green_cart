@@ -20,7 +20,7 @@ export const register=async (req,res)=>{
    res.cookie('token',token,{
     httpOnly:true,//prevent client side js access
     secure:process.env.NODE_ENV==='production',//only send cookie over https
-    sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Strict',
+    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
     maxAge:7*24*60*60*1000//cookie expiry 7 days
    })
    return res.json({success:true ,message:"User registered successfully",user:{
@@ -55,7 +55,7 @@ export const login=async (req,res)=>{
     res.cookie('token',token,{
         httpOnly:true,//prevent client side js access
         secure:process.env.NODE_ENV==='production',//only send cookie over https
-       sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Strict',
+       sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
         maxAge:7*24*60*60*1000//cookie expiry 7 days
        })
        return res.json({success:true,user:{
