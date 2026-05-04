@@ -17,12 +17,12 @@ const port=process.env.PORT||4000;
 
 //Allowed origins for CORS
 const allowedOrigins = ['http://localhost:5173','https://green-cart-eight-azure.vercel.app']
-
+app.use(cors({origin:allowedOrigins,credentials:true}));
 app.post('/stripe',express.raw({type:'application/json'}),stripeWebhook)
 //moddleware configuration
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors({origin:allowedOrigins,credentials:true}));
+
 
 await connectDB()
 await connectCloudinary()
